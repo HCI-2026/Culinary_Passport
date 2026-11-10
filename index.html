@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Around the World in 80 Dishes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,800;1,6..96,500&family=Courier+Prime:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">A culinary passport · 6 regions · 55 countries</p>
+      <h1>Around <span class="the" id="the">the</span> <button class="world" id="world" type="button" title="Tap to travel to another region" aria-label="World. Tap to travel to a random region"><span class="wtxt" id="wtxt">World</span></button> in <span class="num" id="num">80</span> <em>Dishes</em></h1>
+      <p class="lede">Eighty plates, one journey. Tap a stamp to turn it over and read about the dish. Once you've tasted it, stamp your passport and watch your route fill in.</p>
+      <p class="hint">↑ Tap “World” to fly to a random region</p>
+    </div>
+    <svg class="route" viewBox="0 0 600 220" role="img" aria-label="Flight route from Bangkok through Istanbul, Paris, Lima and back toward Sydney">
+      <path id="rt" class="path" d="M40 170 C 120 40, 210 60, 250 110 S 360 190, 420 90 S 540 20, 570 150"/>
+      <path class="drawn" d="M40 170 C 120 40, 210 60, 250 110 S 360 190, 420 90 S 540 20, 570 150"/>
+      <g class="city"><circle cx="40" cy="170" r="6"/><text x="22" y="198">BKK</text></g>
+      <g class="city"><circle cx="160" cy="76" r="6"/><text x="140" y="58">IST</text></g>
+      <g class="city"><circle cx="250" cy="110" r="6"/><text x="262" y="114">CDG</text></g>
+      <g class="city"><circle cx="420" cy="90" r="6"/><text x="400" y="72">LIM</text></g>
+      <g class="city"><circle cx="570" cy="150" r="6"/><text x="548" y="180">SYD</text></g>
+      <g class="plane" id="plane">
+        <path d="M-12 -2 L6 -2 L12 0 L6 2 L-12 2 Z M-2 -2 L-8 -12 L-4 -12 L4 -2 Z M-2 2 L-8 12 L-4 12 L4 2 Z M-12 -2 L-15 -7 L-12 -7 L-8 -2 Z M-12 2 L-15 7 L-12 7 L-8 2 Z"/>
+        <animateMotion id="fly" dur="9s" repeatCount="indefinite" rotate="auto"><mpath href="#rt"/></animateMotion>
+      </g>
+    </svg>
+  </header>
+  <div class="airmail" aria-hidden="true"></div>
+  <div class="navwrap" id="navwrap">
+    <nav class="itin" id="itin" aria-label="Passport pages"></nav>
+    <span class="prog" aria-hidden="true"></span>
+  </div>
+  <aside class="culture" id="culture" aria-label="Icons of the region"><div class="side l" id="sideL"></div><div class="side r" id="sideR"></div></aside>
+
+  <main class="pages" id="pages">
+  <section class="page" id="page-stamps" data-page="stamps" aria-labelledby="stampsTitle">
+    <header class="page-head">
+      <div class="ph-title"><h2 id="stampsTitle">Passport stamps</h2></div>
+      <p class="lede">Eighty dishes from six regions and 55 countries. Turn a stamp over to read about it, then stamp your passport.</p>
+    </header>
+    <div class="stamp-zone">
+  <section class="guide" id="guide" aria-labelledby="guideTitle">
+    <div class="guide-head">
+      <h3 id="guideTitle">How to use your passport</h3>
+      <button type="button" class="reset" id="guideHide">Hide these tips</button>
+    </div>
+    <ol class="guide-steps">
+      <li><b>Turn a stamp over</b><span>Tap any stamp to read about the dish and what to drink with it.</span></li>
+      <li><b>Read its food story</b><span>See how it traveled the world, its key ingredient and how to eat it politely.</span></li>
+      <li><b>Stamp your passport</b><span>Mark a dish Tasted. Taste every dish in a region to earn a boarding pass.</span></li>
+    </ol>
+  </section>
+  <nav class="bar" aria-label="Filter dishes">
+    <div class="chips" id="chips"></div>
+    <input class="search" id="q" type="search" placeholder="Search dish, country or ingredient" aria-label="Search by dish, country or ingredient">
+    <button class="spin" id="spin" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+      Spin the globe
+    </button>
+    <button class="statsbtn" id="statsBtn" type="button" aria-haspopup="dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Passport stats
+    </button>
+  </nav>
+  <div class="log" aria-live="polite">
+    <span>Tasted <b id="count">0</b> / 80</span><span class="wl">Wishlist <b id="wishCount">0</b></span>
+    <div class="meter"><i id="meter"></i></div>
+    <button class="reset" id="reset" type="button">Clear passport</button>
+  </div>
+
+    <p class="showing" id="showing" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-fusion" data-page="fusion" aria-labelledby="fusionTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="fusionTitle">Global flavors &amp; fusion cuisine</h2></div>
+      <p class="lede">How local cooking adapts to global palates, and the creative menus that blend ingredients across continents, from green curry spaghetti to kimchi tacos. Every dish here is real; where an origin story is disputed, we say so.</p>
+    </header>
+    <div class="wok">
+      <p class="wok-l">Can't choose? Toss two cuisines together and see what the world has already cooked up.</p>
+      <div class="reels" aria-hidden="true"><div class="reel" id="reelA"><span>Thai</span></div><span class="x">×</span><div class="reel" id="reelB"><span>Italian</span></div></div>
+      <button class="spin" id="wokBtn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 11h15a7.5 7.5 0 0 1-15 0Z"/><path d="M17 11h5"/><path d="M7 7c0-1.5 1.2-2 1.2-3.5M11.5 7c0-1.5 1.2-2 1.2-3.5"/></svg>
+        Toss the wok
+      </button>
+      <p class="wok-out" id="wokOut" aria-live="polite"></p>
+    </div>
+    <div class="tabs" id="fzTabs" role="group" aria-label="Filter fusion dishes"></div>
+    <div class="fz-grid" id="fzGrid"></div>
+    <div class="more-wrap" id="fzMore"></div>
+  </section>
+
+  <section class="page" id="page-journeys" data-page="journeys" aria-labelledby="ingTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="ingTitle">The journey of ingredients</h2></div>
+      <p class="lede">Local crops that conquered the world's kitchens, traced stop by stop. Pick an ingredient and the globe turns to where it began.</p>
+    </header>
+    <div class="jr">
+      <div class="jr-list" id="jrList" role="group" aria-label="Choose an ingredient"></div>
+      <div class="jr-panel" id="jrPanel">
+        <div class="jr-main" id="jrMain"></div>
+        <div class="jr-side">
+          <div class="jr-globe"><canvas id="jrCv" role="img" aria-label="Globe turned toward where this ingredient began"></canvas><span class="jr-pin" id="jrPin" aria-hidden="true"></span></div>
+          <div class="jr-facts">
+            <p class="jr-fact"><span>Where it began</span><b id="jrOrigin"></b></p>
+            <p class="jr-fact"><span id="jrNowL">Biggest grower today</span><b id="jrNow"></b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="page-trends" data-page="trends" aria-labelledby="trTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="trTitle">Sustainable food trends the world is watching</h2></div>
+      <p class="lede">Ideas that started in one kitchen, field or report and now shape menus everywhere.</p>
+    </header>
+    <div class="tr-grid" id="trGrid"></div>
+  </section>
+
+  <section class="page" id="page-manners" data-page="manners" aria-labelledby="etTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="etTitle">Dining etiquette around the world</h2></div>
+      <p class="lede">Slurp or sip? Chopsticks, spoon or fingers? What's polite at one table can be rude at the next. Compare the rules, learn what to say before you eat, then test yourself.</p>
+    </header>
+    <div class="spots" id="spots"></div>
+    <h3 class="et-sub" id="etSub">Compare the rules, topic by topic</h3>
+    <div class="tabs" id="etTabs" role="group" aria-label="Choose an etiquette topic"></div>
+    <div class="et-grid" id="etGrid"></div>
+  </section>
+
+  <section class="page" id="page-phrases" data-page="phrases" aria-labelledby="sayTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="sayTitle">Say it before you eat</h2></div>
+      <p class="lede">Tap a phrase to hear it, read by your device's built-in voices.</p>
+    </header>
+    <div class="say-grid" id="sayGrid"></div>
+    <div class="more-wrap" id="sayMore"></div>
+  </section>
+
+  <section class="page" id="page-quiz" data-page="quiz" aria-labelledby="qzTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="qzTitle">Polite or faux pas?</h2></div>
+      <p class="lede">Eight real situations from tables around the world. Score six or more to earn your etiquette visa.</p>
+    </header>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <section class="page" id="page-diplomacy" data-page="diplomacy" aria-labelledby="gdTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="gdTitle">Winning hearts through stomachs</h2></div>
+      <p class="lede">Gastrodiplomacy is when a country uses its food to build friendships and reputation abroad. These are real campaigns and moments, and the dishes in your passport they helped make famous.</p>
+    </header>
+    <div class="gd">
+      <div class="gd-main"><ol class="gd-list" id="gdList"></ol><div class="more-wrap" id="gdMore"></div></div>
+      <aside class="gd-aside">
+        <div class="gd-def">
+          <h3>Where the word comes from</h3>
+          <p>In 2002 The Economist described Thailand's plan to multiply Thai restaurants abroad as "gastro-diplomacy." Researchers now study it alongside cultural diplomacy and nation branding: a shared meal is often the first way people meet another culture.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="page" id="page-unesco" data-page="unesco" aria-labelledby="unTitle" hidden>
+    <header class="page-head">
+      <div class="ph-title"><h2 id="unTitle">UNESCO heritage on your plate</h2></div>
+      <p class="lede">Food traditions on UNESCO's Intangible Cultural Heritage lists, linked to stamps in your passport.</p>
+    </header>
+    <ul class="un-list un-grid" id="unList"></ul>
+    <div class="more-wrap" id="unMore"></div>
+  </section>
+  </main>
+
+  <footer class="foot">
+    <p>Stamps, wishlist and exchange rates are saved in this browser only. Rates come from open.er-api.com. Dish photos come from Wikipedia; tap a photo credit for its license. Spice levels run from 0 to 3 chilies and vary by cook.</p>
+    <span>✈ Bon voyage · Bon appétit</span>
+    <button type="button" class="reset" id="guideShow" hidden>Show the how-to tips again</button>
+    <p class="foot-src">Food stories, fusion origins, ingredient journeys and etiquette notes draw on UNESCO's Intangible Cultural Heritage lists, FAO and UNEP reports, government program announcements and published food histories. Many food origins are contested; where they are, the text says "credited to," "likely" or "one story says."</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<div class="globe-ov" id="globeOv" hidden aria-live="polite">
+  <div class="globe-stage">
+    <div class="globe-glow" aria-hidden="true"></div>
+    <canvas id="globeCv" aria-hidden="true"></canvas>
+    <div class="orbit" aria-hidden="true"><svg viewBox="-16 -14 32 28" width="30" height="26"><path d="M-12 -2 L6 -2 L12 0 L6 2 L-12 2 Z M-2 -2 L-8 -12 L-4 -12 L4 -2 Z M-2 2 L-8 12 L-4 12 L4 2 Z M-12 -2 L-15 -7 L-12 -7 L-8 -2 Z M-12 2 L-15 7 L-12 7 L-8 2 Z"/></svg></div>
+    <div class="globe-target" aria-hidden="true"></div>
+  </div>
+  <p class="globe-label" id="globeLabel">Spinning…</p>
+  <p class="globe-sub" id="globeSub">Choosing your next region</p>
+  <p class="globe-skip">Tap or press Esc to skip</p>
+</div>
+
+<dialog class="dlg" id="infoDlg" aria-labelledby="infoTitle">
+  <div class="dlg-in">
+    <form method="dialog"><button class="xbtn" aria-label="Close">×</button></form>
+    <div id="infoBody" style="display:flex;flex-direction:column;gap:16px"></div>
+  </div>
+</dialog>
+
+<dialog class="dlg" id="shareDlg" aria-labelledby="shareTitle">
+  <div class="dlg-in">
+    <form method="dialog"><button class="xbtn" aria-label="Close">×</button></form>
+    <p class="eyebrow">Digital postcard</p>
+    <h2 id="shareTitle">Share this dish</h2>
+    <div class="postcard">
+      <div><p class="pc-title" id="pcTitle"></p><p class="pc-from" id="pcFrom"></p><span class="pc-state" id="pcState"></span></div>
+      <div class="pc-stamp" id="pcStamp" aria-hidden="true"></div>
+    </div>
+    <label for="shareTxt" class="muted" style="font-size:13px">Message (you can edit it)</label>
+    <textarea id="shareTxt"></textarea>
+    <div class="share-btns">
+      <button type="button" class="btn primary" id="shareNative">Share…</button>
+      <button type="button" class="btn" id="shareCopy">Copy text</button>
+      <a class="btn line" id="shareLine" href="https://line.me/R/msg/text/" target="_blank" rel="noopener">Share to LINE</a>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="dlg toc-dlg" id="tocDlg" aria-labelledby="tocTitle">
+  <div class="dlg-in">
+    <form method="dialog"><button class="xbtn" aria-label="Close">×</button></form>
+    <div id="tocBody"></div>
+  </div>
+</dialog>
+
+<dialog class="dlg story-dlg" id="storyDlg" aria-labelledby="storyTitle">
+  <div class="dlg-in">
+    <form method="dialog"><button class="xbtn" aria-label="Close">×</button></form>
+    <div id="storyBody"></div>
+  </div>
+</dialog>
+
+<dialog class="dlg" id="statsDlg" aria-labelledby="statsTitle">
+  <div class="dlg-in">
+    <form method="dialog"><button class="xbtn" aria-label="Close">×</button></form>
+    <div id="statsBody" style="display:flex;flex-direction:column;gap:22px"></div>
+  </div>
+</dialog>
+
+<dialog class="dlg pass-dlg" id="passDlg" aria-labelledby="passTitle">
+  <div class="dlg-in">
+    <h2 class="pass-title" id="passTitle">Boarding pass</h2>
+    <form method="dialog"><button class="xbtn" aria-label="Close">×</button></form>
+    <div id="passBody"></div>
+    <div class="pass-btns">
+      <button type="button" class="btn primary" id="passSave">Save as image</button>
+      <form method="dialog"><button class="btn">Continue journey</button></form>
+    </div>
+  </div>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
